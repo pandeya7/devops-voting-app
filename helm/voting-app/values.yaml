@@ -1,0 +1,9 @@
+replicaCount: 2
+
+app:
+  image: pandeyanurag2010/voting-app:v1.0
+  port: 5000
+
+redis:
+  image: redis:7-alpine
+  port: 6379

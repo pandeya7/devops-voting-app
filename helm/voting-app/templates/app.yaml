@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-app-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: voting-app
+  template:
+    metadata:
+      labels:
+        app: voting-app
+    spec:
+      containers:
+      - name: voting-app
+        image: {{ .Values.app.image }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.app.port }}
+        env:
+        - name: REDIS_HOST
+          value: "redis-service"
+        - name: REDIS_PORT
+          value: "{{ .Values.redis.port }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: voting-app-service
+spec:
+  type: NodePort
+  selector:
+    app: voting-app
+  ports:
+  - port: {{ .Values.app.port }}
+    targetPort: {{ .Values.app.port }}
+    nodePort: 30008
