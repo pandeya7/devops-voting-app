@@ -42,6 +42,14 @@ jobs:
             pandeyanurag2010/voting-app:${{ steps.vars.outputs.sha_short }}
             pandeyanurag2010/voting-app:latest
 
+      - name: Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'pandeyanurag2010/voting-app:${{ steps.vars.outputs.sha_short }}'
+          format: 'table'
+          exit-code: '0'
+          severity: 'CRITICAL,HIGH'
+
   update-helm-tag:
     needs: build-and-push
     runs-on: ubuntu-latest
