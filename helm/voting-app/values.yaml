@@ -3,7 +3,21 @@ replicaCount: 3
 app:
   image: pandeyanurag2010/voting-app:v1.0
   port: 5000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
 
 redis:
   image: redis:7-alpine
   port: 6379
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
+    limits:
+      cpu: 150m
+      memory: 64Mi
